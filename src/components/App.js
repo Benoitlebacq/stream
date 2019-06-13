@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import StreamCreate from "./Streams/StreamCreate";
 import StreamList from "./Streams/StreamList";
 import StreamDelete from "./Streams/StreamDelete";
@@ -7,20 +7,23 @@ import StreamShow from "./Streams/StreamShow";
 import StreamEdit from "./Streams/StreamEdit";
 import "semantic-ui-css/semantic.min.css";
 import Header from "./Header";
+import history from "../history";
 
 const App = () => {
   return (
     <div className=" ui container">
-      <BrowserRouter>
+      <Router history={history}>
         <div>
           <Header />
-          <Route exact path="/" component={StreamList} />
-          <Route path="/streams/new" component={StreamCreate} />
-          <Route path="/streams/edit" component={StreamEdit} />
-          <Route path="/streams/delete" component={StreamDelete} />
-          <Route path="/streams/show" component={StreamShow} />
+          <Switch>
+            <Route exact path="/" component={StreamList} />
+            <Route path ="/streams/new" component={StreamCreate} />
+            <Route path="/streams/edit/:id" component={StreamEdit} />
+            <Route path="/streams/delete/:id" component={StreamDelete} />
+            <Route path="/streams/:id(\d+)" component={StreamShow} />
+          </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 };
